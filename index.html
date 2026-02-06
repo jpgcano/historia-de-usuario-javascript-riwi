@@ -3,11 +3,340 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>javascript</title>
+    <title>Gestor de Tareas - App Integral</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .contenedor {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 32px;
+        }
+
+        .subtitulo {
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        /* Sección de Formulario */
+        .seccion-formulario {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid #667eea;
+        }
+
+        .seccion-formulario h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .grupo-input {
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .grupo-input label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .grupo-input input,
+        .grupo-input textarea {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .grupo-input input:focus,
+        .grupo-input textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        .grupo-botones {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+        }
+
+        .btn-agregar {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-agregar:hover {
+            background: #218838;
+        }
+
+        .btn-sincronizar {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-sincronizar:hover {
+            background: #5568d3;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Sección de Lista */
+        .seccion-lista {
+            margin-bottom: 20px;
+        }
+
+        .seccion-lista h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        #listaTareas {
+            list-style: none;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        #listaTareas li {
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+        }
+
+        #listaTareas li:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateX(5px);
+        }
+
+        .contenido-tarea {
+            flex: 1;
+        }
+
+        .nombre-tarea {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .descripcion-tarea {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .id-tarea {
+            color: #999;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .botones-acciones {
+            display: flex;
+            gap: 8px;
+            margin-left: 10px;
+        }
+
+        .btn-pequeño {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-editar {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .btn-editar:hover {
+            background: #e0a800;
+        }
+
+        .btn-eliminar {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-eliminar:hover {
+            background: #c82333;
+        }
+
+        .btn-pequeño:active {
+            transform: scale(0.95);
+        }
+
+        .lista-vacia {
+            text-align: center;
+            color: #999;
+            padding: 30px;
+            font-style: italic;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        /* Mensaje de estado */
+        .mensaje-estado {
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            display: none;
+            font-weight: 500;
+        }
+
+        .mensaje-exito {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .mensaje-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        /* Indicador de carga */
+        .cargando {
+            display: none;
+            text-align: center;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .cargando.activo {
+            display: block;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
-    
-    <script type="module" src="sistema_interactivo.js"></script>
-    
+    <div class="contenedor">
+        <!-- TASK 1: Título y subtítulo -->
+        <h1>📋 Gestor de Tareas</h1>
+        <p class="subtitulo">Aplicación integral: DOM + Local Storage + Fetch API</p>
+
+        <!-- TASK 1: Mensaje de estado -->
+        <div id="mensajeEstado" class="mensaje-estado"></div>
+
+        <!-- Indicador de carga -->
+        <div id="indicadorCarga" class="cargando">
+            <div class="spinner"></div>
+            <span>Sincronizando...</span>
+        </div>
+
+        <!-- TASK 1: Sección de Formulario -->
+        <div class="seccion-formulario">
+            <h2>Agregar Nueva Tarea</h2>
+            
+            <div class="grupo-input">
+                <label for="inputNombre">Nombre de la Tarea:</label>
+                <input 
+                    type="text" 
+                    id="inputNombre" 
+                    placeholder="Ej: Comprar groceries"
+                    maxlength="100"
+                >
+            </div>
+
+            <div class="grupo-input">
+                <label for="inputDescripcion">Descripción (opcional):</label>
+                <textarea 
+                    id="inputDescripcion" 
+                    placeholder="Ej: Frutas, verduras, lácteos..."
+                    rows="3"
+                    maxlength="250"
+                ></textarea>
+            </div>
+
+            <div class="grupo-botones">
+                <button id="btnAgregar" class="btn btn-agregar">✓ Agregar Tarea</button>
+                <button id="btnSincronizar" class="btn btn-sincronizar">🔄 Sincronizar API</button>
+            </div>
+        </div>
+
+        <!-- TASK 1: Sección de Lista -->
+        <div class="seccion-lista">
+            <h2>Mis Tareas</h2>
+            <ul id="listaTareas"></ul>
+        </div>
+    </div>
+
+    <!-- Enlazar archivo JavaScript -->
+    <script src="app.js"></script>
 </body>
 </html>

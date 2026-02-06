@@ -1,92 +1,159 @@
-// Define lista de productos con datos de ejemplo
-const rawProductos = [
-    { id: 1, nombre: "Laptop", precio: 900000 },
-    { id: 2, nombre: "Mouse", precio: 50000 },
-    { id: 3, nombre: "Teclado", precio: 120000 },
-    { id: 4, nombre: "Monitor", precio: "gratis" } 
+// ========================================================
+// GESTIÓN DE DATOS CON OBJETOS, SETS Y MAPS EN JAVASCRIPT
+// Historia de Usuario: Consolidar estructuras de datos avanzadas
+// ========================================================
+
+// ========================================================
+// TASK 1: Creación del objeto de productos
+// ========================================================
+// Datos brutos de productos con propiedades: id, nombre, precio
+const productosData = [
+    { id: 1, nombre: "Laptop", precio: 900000, categoria: "Computación" },
+    { id: 2, nombre: "Mouse", precio: 50000, categoria: "Periféricos" },
+    { id: 3, nombre: "Teclado", precio: 120000, categoria: "Periféricos" },
+    { id: 4, nombre: "Monitor", precio: 350000, categoria: "Computación" },
+    { id: 5, nombre: "Headphones", precio: 200000, categoria: "Audio" }
 ];
 
+// ========================================================
+// TASK 5: Función de validación - Datos correctos
+// ========================================================
+// Valida que cada producto tenga id, nombre y precio válidos
+const esProductoValido = (producto) => {
+    return typeof producto.id === 'number' && 
+           typeof producto.nombre === 'string' && 
+           typeof producto.precio === 'number' && 
+           producto.precio > 0 && 
+           typeof producto.categoria === 'string';
+};
 
-// Valida que el producto tenga datos correctos (id número, nombre texto, precio número positivo)
-function validarProducto(producto) {
-    if (typeof producto.id !== 'number') return false;
-    if (typeof producto.nombre !== 'string' || producto.nombre.trim() === "") return false;
-    if (typeof producto.precio !== 'number' || producto.precio <= 0) return false;
-    return true;
+// ========================================================
+// TASK 2: Uso de Set en JavaScript - Números únicos
+// ========================================================
+console.log(">>> SISTEMA DE GESTIÓN DE DATOS <<<\n");
+
+// Crear un Set con números que incluyen duplicados
+const numerosConDuplicados = [10, 20, 30, 30, 40, 10, 50, 20, 60];
+console.log("--- TASK 2: Conjuntos (Sets) ---");
+console.log("Números originales (con duplicados):", numerosConDuplicados);
+
+// Crear Set que automáticamente elimina duplicados
+const setNumeros = new Set(numerosConDuplicados);
+console.log("Números en el Set (únicos):", Array.from(setNumeros));
+
+// Agregar un nuevo número al Set usando .add()
+setNumeros.add(70);
+console.log("Después de agregar 70:", Array.from(setNumeros));
+
+// Verificar si un número existe dentro del Set usando .has()
+const existe20 = setNumeros.has(20);
+const existe100 = setNumeros.has(100);
+console.log(`¿Existe el número 20? ${existe20}`);
+console.log(`¿Existe el número 100? ${existe100}`);
+
+// Eliminar un número del Set con .delete()
+setNumeros.delete(30);
+console.log("Después de eliminar 30:", Array.from(setNumeros));
+
+// Recorrer el Set usando for...of
+console.log("Recorriendo Set con for...of:");
+for (const numero of setNumeros) {
+    console.log(`  • ${numero}`);
 }
 
-// Filtra solo los productos válidos usando la función validar
-const productos = rawProductos.filter(validarProducto);
+// ========================================================
+// TASK 1 & 5: Validación de productos
+// ========================================================
+console.log("\n--- TASK 1 & 5: Objetos de Productos (Validados) ---");
 
-// Muestra los productos válidos en consola
-console.log("--- TASK 1 & 5: Lista de Productos Válidos (Array de Objetos) ---");
-console.log(productos);
+// Filtrar solo los productos válidos
+const productos = productosData.filter(esProductoValido);
 
-console.log("\n--- TASK 2: Uso de Set ---");
+// Mostrar productos en tabla
+console.log("Productos válidos:");
+console.table(productos);
 
-// Crea una lista de números con valores duplicados
-const listaNumeros = [10, 20, 30, 30, 40, 10, 50];
+// ========================================================
+// TASK 4: Iteración de Objetos - for...in
+// ========================================================
+console.log("\n--- TASK 4: Iteración con for...in ---");
+console.log("Propiedades del primer producto:");
+const primerProducto = productos[0];
 
-// Convierte el array a un Set (elimina duplicados automáticamente)
-const setNumeros = new Set(listaNumeros);
-
-// Imprime el Set sin duplicados
-console.log("Set inicial (sin duplicados):", setNumeros);
-
-// Agrega un nuevo número al Set
-setNumeros.add(60);
-console.log("Después de add(60):", setNumeros);
-
-// Verifica si el número 20 existe en el Set
-console.log("¿Existe el 20?:", setNumeros.has(20));
-
-
-// Elimina el número 40 del Set
-setNumeros.delete(40);
-console.log("Después de delete(40):", setNumeros);
-
-
-console.log("Recorrido del Set con for...of:");
-// Recorre cada número del Set e imprime su valor
-for (const num of setNumeros) {
-    console.log(`Número: ${num}`); [cite_start]
+for (const propiedad in primerProducto) {
+    console.log(`  ${propiedad}: ${primerProducto[propiedad]}`);
 }
 
-
-console.log("\n--- TASK 3: Creación de un Map ---");
-
-// Crea un Map para asociar categorías con productos
-const categoriaMap = new Map();
-
-
-// Agrega pares de categoría-producto al Map
-categoriaMap.set("Computación", "Laptop");
-categoriaMap.set("Periféricos Entrada", "Mouse");
-categoriaMap.set("Periféricos Salida", "Monitor"); 
-
-// Imprime el Map con todas las categorías y productos
-console.log("Map creado (Categoría -> Producto):", categoriaMap); [cite_start]
-
-console.log("\n--- TASK 4: Iteraciones Avanzadas ---");
-
-// Obtiene el primer producto de la lista validada
-const productoEjemplo = productos[0];
-
-// Recorre todas las propiedades del objeto e imprime cada clave y valor
-console.log(">> Propiedades del objeto (for...in):");
-for (const key in productoEjemplo) {
-    console.log(`${key}: ${productoEjemplo[key]}`);
-}
-
-// Extrae y muestra las claves, valores y pares clave-valor del objeto
-console.log(">> Métodos de Objetos:");
-console.log("Keys:", Object.keys(productoEjemplo));      [cite_start]
-console.log("Values:", Object.values(productoEjemplo));
-console.log("Entries:", Object.entries(productoEjemplo));
-
-
-// Recorre el Map y imprime cada categoría con su producto correspondiente
-console.log(">> Recorrido del Map (forEach):");
-categoriaMap.forEach((valor, clave) => {
-    console.log(`Categoría: ${clave} | Producto: ${valor}`);
+// ========================================================
+// TASK 4: Métodos de Object - keys, values, entries
+// ========================================================
+console.log("\nMétodos de Object (primer producto):");
+console.log("Object.keys():", Object.keys(primerProducto));
+console.log("Object.values():", Object.values(primerProducto));
+console.log("Object.entries():");
+Object.entries(primerProducto).forEach(([clave, valor]) => {
+    console.log(`  ${clave}: ${valor}`);
 });
+
+// ========================================================
+// TASK 3: Creación de un Map - Categoría → Productos
+// ========================================================
+console.log("\n--- TASK 3: Maps (Categoría → Nombres de Productos) ---");
+
+// Crear un Map que relaciona categoría con nombres de productos
+const mapCategorias = new Map();
+
+// Agregar categorías y productos al Map
+productos.forEach(producto => {
+    if (!mapCategorias.has(producto.categoria)) {
+        mapCategorias.set(producto.categoria, []);
+    }
+    mapCategorias.get(producto.categoria).push(producto.nombre);
+});
+
+// Mostrar el contenido del Map
+console.log("Contenido del Map (categoría → productos):");
+mapCategorias.forEach((nombres, categoria) => {
+    console.log(`  ${categoria}: ${nombres.join(", ")}`);
+});
+
+// ========================================================
+// TASK 4: Recorrido de Sets con for...of
+// ========================================================
+console.log("\n--- TASK 4: Recorrido de Set con for...of ---");
+console.log("Números únicos en el Set (for...of):");
+for (const numero of setNumeros) {
+    console.log(`  • ${numero}`);
+}
+
+// ========================================================
+// TASK 4: Recorrido de Maps con forEach()
+// ========================================================
+console.log("\n--- TASK 4: Recorrido de Map con forEach() ---");
+console.log("Iteración descriptiva del Map:");
+mapCategorias.forEach((productos, categoria) => {
+    console.log(`  Categoría "${categoria}" contiene: ${productos.join(", ")}`);
+});
+
+// ========================================================
+// RESUMEN FINAL - TASK 5: Pruebas Completas
+// ========================================================
+console.log("\n>>> RESUMEN FINAL DE PRUEBAS <<<");
+
+console.log("\n1. Lista completa de productos (Objeto):");
+console.log(`   Total de productos válidos: ${productos.length}`);
+productos.forEach(producto => {
+    console.log(`   - ID ${producto.id}: ${producto.nombre} ($${producto.precio})`);
+});
+
+console.log("\n2. Lista de números únicos (Set):");
+console.log(`   Total de números únicos: ${setNumeros.size}`);
+console.log(`   Números: ${Array.from(setNumeros).sort((a, b) => a - b).join(", ")}`);
+
+console.log("\n3. Categorías y productos (Map):");
+console.log(`   Total de categorías: ${mapCategorias.size}`);
+mapCategorias.forEach((productosLista, categoria) => {
+    console.log(`   ${categoria}: ${productosLista.join(", ")}`);
+});
+
+console.log("\n>>> FIN DEL PROGRAMA <<<");

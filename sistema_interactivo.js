@@ -1,44 +1,55 @@
-//Historia de usuarios
+// ============================================
+// SISTEMA INTERACTIVO DE MENSAJES
+// Programa que solicita datos del usuario y 
+// muestra mensajes personalizados según validaciones
+// ============================================
 
+// TASK 1: Configuración inicial del proyecto
+// Este archivo debe ejecutarse en el navegador (usa prompt() y alert())
+console.log("Sistema interactivo iniciado...\n");
 
+// ============================================
+// TASK 2: Entrada de datos del usuario
+// ============================================
 
+// Solicitar nombre del usuario usando prompt()
+const nombreUsuario = prompt("¿Cuál es tu nombre?");
 
-//entrada de datos y declaración de variables
-let name =prompt("Ingresa nombre: ");
-let age = prompt("Ingresa edad: "); 
-//verificar si el dato es un numero
-if (age==Number) {
-    console.log("es un numero")
-}else{
-    console.error("Error: Por favor, ingresa una edad válida en números.");
+// Solicitar edad del usuario usando prompt()
+const edadIngresada = prompt("¿Cuántos años tienes?");
+
+console.log(`Datos ingresados - Nombre: ${nombreUsuario}, Edad: ${edadIngresada}`);
+
+// ============================================
+// TASK 3: Validación de la edad
+// ============================================
+
+// Convertir el valor ingresado a número
+const edad = Number(edadIngresada);
+
+// Verificar si la edad es un número válido (usando isNaN y validación adicional)
+const esNumeroValido = !isNaN(edad) && edad > 0 && Number.isInteger(edad);
+
+// Si la entrada no es válida, mostrar error usando console.error()
+if (!esNumeroValido) {
+  console.error("Error: Por favor, ingresa una edad válida en números.");
+} else {
+  // ============================================
+  // TASK 4: Condicionales y mensajes dinámicos
+  // ============================================
+  
+  // Evaluar si es menor o mayor de edad
+  if (edad < 18) {
+    // Mensaje para menores de edad
+    const mensajeMenor = `Hola ${nombreUsuario}, eres menor de edad. ¡Sigue aprendiendo y disfrutando del código!`;
+    alert(mensajeMenor);
+    console.log(mensajeMenor);
+  } else if (edad >= 18) {
+    // Mensaje para mayores de edad
+    const mensajeMayor = `Hola ${nombreUsuario}, eres mayor de edad. ¡Prepárate para grandes oportunidades en el mundo de la programación!`;
+    alert(mensajeMayor);
+    console.log(mensajeMayor);
+  }
 }
-//verificar si es mayor de edad
-if (age<18) {
-    alert(`Hola ${name}, eres menor de edad. ¡Sigue aprendiendo y disfrutando del código!`);
-    console.log(`Hola ${name}, eres menor de edad. ¡Sigue aprendiendo y disfrutando del código!`);
-}else{
-    alert(`Hola ${name}, eres mayor de edad. ¡Prepárate para grandes oportunidades en el mundo de la programación!`);
-    console.log(`Hola ${name}, eres mayor de edad. ¡Prepárate para grandes oportunidades en el mundo de la programación!`);
-}
 
-
-const productos =[
-    {
-        id: 1,
-        nombre: "laptop",
-        precio: 900000
-    },
-    {
-        id: 2,
-        nombre: "mouse",
-        precio: 50000
-    },
-    {
-        id: 3,
-        nombre: "teclado",
-        precio: 120000
-    }
-];
-
-const setnumeros = new Set();
-console.log(setnumeros)
+console.log("\nPrograma finalizado.");

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini-App: Lista de Notas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .contenedor {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 28px;
+        }
+
+        .instruccion {
+            color: #666;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .input-grupo {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        #inputNota {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        #inputNota:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        #btnAgregar {
+            padding: 12px 25px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        #btnAgregar:hover {
+            background: #5568d3;
+        }
+
+        #btnAgregar:active {
+            transform: scale(0.98);
+        }
+
+        .seccion-notas h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        #listaNotas {
+            list-style: none;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        #listaNotas li {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s;
+        }
+
+        #listaNotas li:hover {
+            background: #e9ecef;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .texto-nota {
+            flex: 1;
+            color: #333;
+            word-wrap: break-word;
+        }
+
+        .btn-eliminar {
+            padding: 8px 15px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background 0.3s;
+            margin-left: 10px;
+        }
+
+        .btn-eliminar:hover {
+            background: #c82333;
+        }
+
+        .btn-eliminar:active {
+            transform: scale(0.95);
+        }
+
+        .lista-vacia {
+            text-align: center;
+            color: #999;
+            padding: 30px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <!-- TASK 1: Estructura base HTML -->
+        <h1>📝 Mi Lista de Notas</h1>
+        <p class="instruccion">Escribe una nota y haz clic en "Agregar" para guardarla</p>
+
+        <div class="input-grupo">
+            <input 
+                type="text" 
+                id="inputNota" 
+                placeholder="Escribe tu nota aquí..."
+                autocomplete="off"
+            >
+            <button id="btnAgregar">Agregar</button>
+        </div>
+
+        <div class="seccion-notas">
+            <h2>Mis Notas:</h2>
+            <ul id="listaNotas"></ul>
+        </div>
+    </div>
+
+    <!-- Enlazar archivo JavaScript -->
+    <script src="manipulacion_dom.js"></script>
+</body>
+</html>
